@@ -1,7 +1,9 @@
 import React from "react";
 import { InputFieldFormElement } from "./elements/InputField";
+import { LongInputFieldFormElement } from "./elements/LongTextInputField";
+import { BooleanFormElement } from "./elements/Boolean";
 
-export type ElementsType = "input";
+export type ElementsType = "input" | "longInput" | "boolean";
 
 export interface FormElement {
   construct: (id: string) => FormElementInstance;
@@ -29,4 +31,6 @@ type FormElementsType = {
 
 export const formElements: FormElementsType = {
   input: InputFieldFormElement,
+  longInput: LongInputFieldFormElement,
+  boolean: BooleanFormElement,
 };

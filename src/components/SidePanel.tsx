@@ -32,7 +32,7 @@ const SidePanel: React.FC<{
   ];
 
   return (
-    <aside className="bg-gray-200 p-4 h-full min-h-screen grid grid-cols-2 gap-2 ">
+    <aside className="bg-gray-200 p-4 h-full min-h-screen border-r-[#19b39448] border-r-[1px]">
       {/* <Menu
         mode="vertical"
         style={{
@@ -61,7 +61,11 @@ const SidePanel: React.FC<{
           <p className="text-xs text-center">{question.label}</p>
         </div>
       ))} */}
-      <SidePanelElement formElement={formElements.input} />
+      <div className="grid grid-cols-2 gap-2">
+        <SidePanelElement formElement={formElements.input} />
+        <SidePanelElement formElement={formElements.longInput} />
+        <SidePanelElement formElement={formElements.boolean} />
+      </div>
     </aside>
   );
 };

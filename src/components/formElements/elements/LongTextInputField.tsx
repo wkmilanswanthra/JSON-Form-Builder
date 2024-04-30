@@ -1,19 +1,21 @@
 "use client";
 
-import { Button, Input } from "antd";
+import { Input } from "antd";
 import { ElementsType, FormElementInstance } from "../FormElements";
 import { MdTextFields } from "react-icons/md";
 import { useState } from "react";
 
-const type: ElementsType = "input";
+const { TextArea } = Input;
+
+const type: ElementsType = "longInput";
 
 const extraAttributes = {
-  label: "Input Field",
-  placeholder: "Question",
-  required: false,
+  label: "Long Text Input Field",
+  placeholder: "Enter your text here",
+  required: true,
 };
 
-export const InputFieldFormElement = {
+export const LongInputFieldFormElement = {
   type,
   construct: (id: string) => ({
     id,
@@ -21,12 +23,12 @@ export const InputFieldFormElement = {
     extraAttributes,
   }),
   buttonProps: {
-    label: "Input Field",
+    label: "Long Text",
     icon: MdTextFields,
   },
   builderComponent: BuilderComponent,
-  formComponent: () => <div>Input Field Form Elements</div>,
-  propertiesComponent: () => <div>Input Field Properties</div>,
+  formComponent: () => <div>Long Input Field Form Elements</div>,
+  propertiesComponent: () => <div>Long Input Field Properties</div>,
 };
 
 type CustomInstance = FormElementInstance & {
@@ -40,13 +42,13 @@ function BuilderComponent({
 }) {
   const element = elementInstance as CustomInstance;
 
-  const [value, setValue] = useState<string>(`Question`);
+  const [value, setValue] = useState<string>(`Question `);
 
-  const { label, placeholder, required } = element.extraAttributes;
+  const { placeholder, required } = element.extraAttributes;
   return (
-    <div className="h-full w-full border-2  border-gray-300 rounded-xl px-4 py-2 m-auto mb-4">
+    <div className="h-full w-full border-2  border-gray-300 rounded-xl px-4 py-2 w-[70%] m-auto mb-4">
       <div className="flex align-middle">
-        <label className="mb-4 text-lg p-1">1.</label>
+        <label className="mb-4 text-lg p-1">2.</label>
         <Input
           variant="borderless"
           placeholder={placeholder}
@@ -59,6 +61,7 @@ function BuilderComponent({
               setValue(`Question `);
             }
           }}
+          required={required}
         />
         {required && (
           <span className="text-red-500 ml-2 text-xl">
@@ -66,8 +69,9 @@ function BuilderComponent({
           </span>
         )}
       </div>
-      <Input
+      <TextArea
         variant="filled"
+        rows={4}
         disabled
         className="mb-4 text-lg !cursor-default"
       />

@@ -23,7 +23,7 @@ function Page({ index }: { index: number }) {
   };
 
   const droppable = useDroppable({
-    id: `page-${index}`,
+    id: index,
     data: {
       isQuestionDropArea: true,
     },
@@ -31,13 +31,13 @@ function Page({ index }: { index: number }) {
 
   useDndMonitor({
     onDragEnd: (event) => {
-      console.log(event.active.data.current);
+      console.log(event);
       const { active, over } = event;
       if (!active || !over) return;
 
       const isSidePanelElement = active?.data?.current?.isSidePanelElement;
 
-      if (isSidePanelElement) {
+      if (isSidePanelElement && event?.over?.id == index) {
         const type = active?.data?.current?.type;
         const newElement = formElements[type as ElementsType].construct(
           GenerateId()
@@ -45,7 +45,7 @@ function Page({ index }: { index: number }) {
 
         dispatch(
           addQuestion({
-            page: index,
+            page: event?.over?.id,
             question: newElement,
           })
         );
@@ -96,7 +96,11 @@ function Page({ index }: { index: number }) {
       >
         {config[index]?.elements.length > 0 &&
           config[index].elements.map((element: any, index: number) => (
-            <PageElementWrapper key={element.id} element={element} />
+            <PageElementWrapper
+              key={element.id}
+              element={element}
+              index={index}
+            />
           ))}
         <div
           className="
@@ -114,7 +118,13 @@ function Page({ index }: { index: number }) {
   );
 }
 
-function PageElementWrapper({ element }: { element: FormElementInstance }) {
+function PageElementWrapper({
+  element,
+  index,
+}: {
+  element: FormElementInstance;
+  index: number;
+}) {
   const BuilderComponent = formElements[element.type].builderComponent;
   return <BuilderComponent elementInstance={element} />;
 }
